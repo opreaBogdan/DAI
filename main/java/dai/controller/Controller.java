@@ -77,7 +77,18 @@ class Controller {
         String token = requestParams.get("token");
         String passowrd = requestParams.get("password");
 
-        userEntityRepository.updatePasswordByToken(token, passowrd);
+        int correct = userEntityRepository.updatePasswordByToken(token, passowrd);
+
+        if (correct != 1) {
+            Map<String, String> response = new HashMap<>();
+            response.put("success","false");
+            response.put("error","The token is not correct!");
+            return response;
+        }
+        Map<String, String> response = new HashMap<>();
+        response.put("success","true");
+        response.put("error","");
+        return response;
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
