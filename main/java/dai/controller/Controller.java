@@ -1,9 +1,13 @@
 package dai.controller;
 
+import com.sun.xml.internal.stream.writers.UTF8OutputStreamWriter;
+import dai.entities.ImageEntity;
 import dai.entities.UserEntity;
+import dai.repository.ImageEntityRepository;
 import dai.repository.UserEntityRepository;
 import dai.utils.MailSendingThread;
 import dai.utils.RandomString;
+import org.jcp.xml.dsig.internal.dom.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -11,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.io.*;
 import java.util.*;
 
 @RestController
@@ -20,6 +25,9 @@ class Controller {
 
     @Autowired
     UserEntityRepository userEntityRepository;
+
+    @Autowired
+    ImageEntityRepository imageEntityRepository;
 
     RandomString rs = new RandomString();
 
@@ -133,5 +141,31 @@ class Controller {
         response.put("success","true");
         response.put("error","");
         return response;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/addPicture", method = RequestMethod.POST ,consumes = {"application/x-www-form-urlencoded","multipart/form-data"})
+    public Map<String, String> uploadFile(@ModelAttribute Receive response) throws Exception {
+        if(response.getFile() == null) {
+            throw new IllegalArgumentException("File not found");
+        }
+        int price = response.getPrice();
+        String username = response.getUsername();
+
+        String fileName = rs.nextString();
+        BufferedWriter writeFile = new BufferedWriter(new FileWriter(new File(fileName)));
+        BufferedReader readFile = new BufferedReader(new InputStreamReader(response.getFile().getInputStream(), "UTF-8"));
+
+        String line;
+        while ((line = readFile.readLine()) != null) {
+            writeFile.write(line + "\n");
+        }
+
+        imageEntityRepository.save(new ImageEntity(username, fileName, price));
+
+        Map<String, String> result = new HashMap<>();
+        result.put("success","true");
+        result.put("error","");
+        return result;
     }
 }
