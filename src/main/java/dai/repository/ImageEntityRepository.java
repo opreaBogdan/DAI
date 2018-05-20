@@ -13,31 +13,21 @@ import java.util.List;
 @Repository
 public interface ImageEntityRepository extends JpaRepository<ImageEntity, Long> {
 
-    @Modifying
     @Transactional
-    @Query("update UserEntity set password = ?2 where username = ?1")
-    int updateUserInfo(String username, String password);
+    @Query("select t from ImageEntity as t where t.username = ?1 AND t.price BETWEEN ?2 AND ?3 AND t.bought IS false")
+    List<ImageEntity> getImagesForUser(String username, int minPrice, int maxPrice);
+
+    @Transactional
+    @Query("select t from ImageEntity as t where t.id = ?1")
+    List<ImageEntity> getImage(long id);
+
+    @Transactional
+    @Query("select t from ImageEntity as t where t.bought = false")
+    List<ImageEntity> getAllImages();
 
     @Modifying
     @Transactional
-    @Query("update UserEntity set password = ?2 where token = ?1")
-    int updatePasswordByToken(String token, String password);
+    @Query("update ImageEntity set bought = ?2 where id = ?1")
+    void updatePictureAsBought(long id, boolean isBought);
 
-    @Modifying
-    @Transactional
-    @Query("update UserEntity set token = ?2 where username = ?1")
-    int updateTokenForRecover(String username, String token);
-
-    @Modifying
-    @Transactional
-    @Query("update UserEntity set validated = true where token = ?1")
-    int validate(String token);
-
-    @Transactional
-    @Query("select t from UserEntity as t where t.username = ?1 AND t.password = ?2")
-    List<UserEntity> findUser(String username, String password);
-
-    @Transactional
-    @Query("select t from UserEntity as t where t.username = ?1 OR t.email = ?2")
-    List<UserEntity> findUserRegister(String username, String email);
 }

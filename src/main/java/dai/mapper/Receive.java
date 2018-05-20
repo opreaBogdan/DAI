@@ -1,4 +1,4 @@
-package dai.controller;
+package dai.mapper;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,7 +16,7 @@ public class Receive {
     public Receive() {
     }
 
-    public void setPrice(int perioada){
+    public void setPrice(int perioada) {
         this.price = perioada;
     }
 
@@ -32,7 +32,11 @@ public class Receive {
         return this.file;
     }
 
-    public void setUsername(String username) { this.username = username; }
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-    public String getUsername() { return this.username;}
+    public String getUsername() {
+        return this.username;
+    }
 }

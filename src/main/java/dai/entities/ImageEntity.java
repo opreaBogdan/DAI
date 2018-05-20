@@ -1,15 +1,16 @@
 package dai.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
-@Table(name="images")
+@Table(name = "images")
 public class ImageEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
     @Column(name = "username", nullable = false)
     private String username;
 
@@ -19,21 +20,51 @@ public class ImageEntity {
     @Column(name = "price", nullable = false)
     private int price;
 
-    public ImageEntity() {}
+    @Column(name = "bought", nullable = false)
+    private boolean bought;
 
-    public ImageEntity(String username, String location, int price){
+    public ImageEntity() {
+    }
+
+    public ImageEntity(String username, String location, int price) {
         this.username = username;
         this.location = location;
         this.price = price;
+        this.bought = false;
     }
 
     public String getUsername() {
         return username;
     }
+
     public String getLocation() {
         return location;
     }
+
     public int getPrice() {
         return price;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public boolean isBought() {
+        return bought;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ImageEntity that = (ImageEntity) o;
+        return id == that.id &&
+                Objects.equals(username, that.username);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, username);
     }
 }
