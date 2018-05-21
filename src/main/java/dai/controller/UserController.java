@@ -1,6 +1,9 @@
 package dai.controller;
 
+import dai.entities.ImageEntity;
+import dai.entities.TransactionEntity;
 import dai.entities.UserEntity;
+import dai.repository.TransactionEntityRepository;
 import dai.repository.UserEntityRepository;
 import dai.utils.MailSendingThread;
 import dai.utils.RandomString;
@@ -22,6 +25,9 @@ class UserController {
 
     @Autowired
     UserEntityRepository userEntityRepository;
+
+    @Autowired
+    TransactionEntityRepository transactionEntityRepository;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public Map<String, String> login(@RequestParam Map<String,String> requestParams) throws Exception{
@@ -136,5 +142,20 @@ class UserController {
         return new RedirectView("/", true);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/buy/{username}", method = RequestMethod.GET)
+    public Map<String, Object> buy(@PathVariable("username") String userName) {
 
+        List<TransactionEntity> transactions = transactionEntityRepository.getTransactionsForUser(userName);
+
+        // TODO
+        Map<String, Object> response = new HashMap<>();
+        final String[] command = {""};
+//        currentCart.get().stream().map(x -> command[0] = command[0] + x.getId() + ";");
+        transactionEntityRepository.save(new TransactionEntity(userName, command[0], System.currentTimeMillis()));
+        response.put(SUCCESS, "true");
+        response.put(ERROR, "");
+
+        return response;
+    }
 }

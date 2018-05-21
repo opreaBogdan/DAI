@@ -15,6 +15,8 @@ public class Image {
     private int price;
     @JsonProperty("bought")
     private boolean bought;
+    @JsonProperty("sold")
+    private int sold;
 
     public boolean isBought() {
         return bought;
@@ -55,6 +57,10 @@ public class Image {
     public void setPrice(int price) {
         this.price = price;
     }
+
+    public int getSold() { return sold; }
+
+    public void setSold(int sold) { this.sold = sold; }
 
     public Image(long id, String userName, String location, int price, boolean bought) {
         this.userName = userName;

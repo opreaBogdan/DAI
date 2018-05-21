@@ -23,6 +23,9 @@ public class ImageEntity {
     @Column(name = "bought", nullable = false)
     private boolean bought;
 
+    @Column(name = "sold", nullable = false)
+    private int sold;
+
     public ImageEntity() {
     }
 
@@ -31,6 +34,7 @@ public class ImageEntity {
         this.location = location;
         this.price = price;
         this.bought = false;
+        this.sold = 0;
     }
 
     public String getUsername() {
@@ -52,6 +56,8 @@ public class ImageEntity {
     public boolean isBought() {
         return bought;
     }
+
+    public int getSold() { return sold; }
 
     @Override
     public boolean equals(Object o) {
