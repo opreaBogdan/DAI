@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+
+
+<head>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+	<title>Phtoography</title>
+	<meta name="description" content="Acest articol este important si bine scris">
+	<meta http-equiv="content-type" content="text/html;charset=UTF-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+</head>
+
+<body>
+
+
+	<div class="city">
+
+		<header>
+			<h1>Photography is art</h1>
+		</header>
+		<div class="continut">
+            <h3> Token is no longer valid! </h3>
+			<button id="go_back"> BACK </button>
+		</div>
+				<script>
+					$.ajaxSetup({
+						cache: false
+					});
+					$(document).ready(function () {
+						$("#go_back").click(function () {
+							$(location).attr('href', 'http://localhost:8080')
+						});
+                    });
+				</script>
+			
+			<div class="listaFotografi">
+
+				<nav>
+					<ul id="lista1">
+					</ul>
+				</nav>
+			</div>
+		</div>
+	<footer>
+		<p> Copyright All rights reserved to Roxana Pavelescu</p>
+	</footer>
+
+</body>
+
+</html>

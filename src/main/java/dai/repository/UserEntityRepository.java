@@ -24,8 +24,8 @@ public interface UserEntityRepository extends JpaRepository<UserEntity, Long> {
 
     @Modifying
     @Transactional
-    @Query("update UserEntity set token = ?2 where username = ?1")
-    int updateTokenForRecover(String username, String token);
+    @Query("update UserEntity set token = ?2 where email = ?1")
+    int updateTokenForRecover(String email, String token);
 
     @Modifying
     @Transactional

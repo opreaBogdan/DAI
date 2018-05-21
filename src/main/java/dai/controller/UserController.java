@@ -7,6 +7,7 @@ import dai.utils.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.*;
 
@@ -22,7 +23,7 @@ class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public Map<String, String> login(@RequestParam Map<String,String> requestParams) throws Exception{
-        String username = requestParams.get("username");
+            String username = requestParams.get("username");
         String password = requestParams.get("password");
 
         List<UserEntity> users = userEntityRepository.findUser(username, password);
@@ -116,7 +117,7 @@ class UserController {
     }
 
     @RequestMapping(value = "/validate", method = RequestMethod.GET)
-    public Map<String, String> validate(@RequestParam Map<String,String> requestParams) throws Exception{
+    public RedirectView validate(@RequestParam Map<String,String> requestParams) throws Exception{
         String token = requestParams.get("token");
 
         int correct = userEntityRepository.validate(token);
@@ -124,12 +125,12 @@ class UserController {
             Map<String, String> response = new HashMap<>();
             response.put("success","false");
             response.put("error","The token is not correct!");
-            return response;
+            return new RedirectView("/token_not_valid.html", true);
         }
         Map<String, String> response = new HashMap<>();
         response.put("success","true");
         response.put("error","");
-        return response;
+        return new RedirectView("/", true);
     }
 
 
