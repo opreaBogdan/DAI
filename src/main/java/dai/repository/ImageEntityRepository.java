@@ -22,7 +22,7 @@ public interface ImageEntityRepository extends JpaRepository<ImageEntity, Long> 
     List<ImageEntity> getImage(long id);
 
     @Transactional
-    @Query("select t from ImageEntity as t where t.bought = false")
+    @Query("select t from ImageEntity as t")
     List<ImageEntity> getAllImages();
 
     @Modifying

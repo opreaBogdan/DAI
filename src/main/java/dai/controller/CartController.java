@@ -44,7 +44,7 @@ public class CartController {
         if (!Boolean.parseBoolean(success)) {
             response.put(ERROR, "The image is already in the users' cart");
         } else {
-            imageEntityRepository.updatePictureAsBought(imageId, true);
+//            imageEntityRepository.updatePictureAsBought(imageId, true);
             response.put(ERROR, "");
         }
         return response;
@@ -67,7 +67,7 @@ public class CartController {
         if (!Boolean.parseBoolean(success)) {
             response.put(ERROR, "The image is already in the users' cart");
         } else {
-            imageEntityRepository.updatePictureAsBought(imageId, false);
+//            imageEntityRepository.updatePictureAsBought(imageId, false);
             response.put(ERROR, "");
         }
         return response;
@@ -92,6 +92,17 @@ public class CartController {
             response.put(SUCCESS, "false");
             response.put(ERROR, "There are no images in the users cart");
         }
+
+        return response;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/logout/{username}", method = RequestMethod.GET)
+    public Map<String, Object> logout(@PathVariable("username") String userName) {
+
+        Map<String, Object> response = new HashMap<>();
+        response.put(SUCCESS, cart.removeUser(userName));
+        response.put(ERROR, "");
 
         return response;
     }

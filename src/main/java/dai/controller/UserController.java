@@ -11,6 +11,8 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.*;
 
+import static dai.utils.Constants.ERROR;
+import static dai.utils.Constants.SUCCESS;
 import static dai.utils.Constants.rs;
 
 @RestController
@@ -35,12 +37,12 @@ class UserController {
 
         Map <String, String> response = new HashMap<>();
         if (error == null) {
-            response.put("success", "true");
-            response.put("error", "");
+            response.put(SUCCESS, "true");
+            response.put(ERROR, "");
             response.put("type", users.get(0).getType());
         } else {
-            response.put("success", "false");
-            response.put("error", error);
+            response.put(SUCCESS, "false");
+            response.put(ERROR, error);
             response.put("type", "");
         }
         return response;
@@ -56,8 +58,8 @@ class UserController {
         int correct = userEntityRepository.updateTokenForRecover(email, token);
         if (correct != 1) {
             Map<String, String> response = new HashMap<>();
-            response.put("success","false");
-            response.put("error","The email you entered is not correct!");
+            response.put(SUCCESS,"false");
+            response.put(ERROR,"The email you entered is not correct!");
             return response;
         }
 
@@ -65,8 +67,8 @@ class UserController {
         mailThread.run();
 
         Map<String, String> response = new HashMap<>();
-        response.put("success","true");
-        response.put("error","");
+        response.put(SUCCESS,"true");
+        response.put(ERROR,"");
         return response;
     }
 
@@ -79,13 +81,13 @@ class UserController {
 
         if (correct != 1) {
             Map<String, String> response = new HashMap<>();
-            response.put("success","false");
-            response.put("error","The token is not correct!");
+            response.put(SUCCESS,"false");
+            response.put(ERROR,"The token is not correct!");
             return response;
         }
         Map<String, String> response = new HashMap<>();
-        response.put("success","true");
-        response.put("error","");
+        response.put(SUCCESS,"true");
+        response.put(ERROR,"");
         return response;
     }
 
@@ -99,8 +101,9 @@ class UserController {
         List<UserEntity> users = userEntityRepository.findUserRegister(username, email);
         if (users != null && users.size() != 0) {
             Map<String, String> response = new HashMap<>();
-            response.put("success","false");
-            response.put("error","Username or email already in use!");
+            response.put(SUCCESS,"false");
+            response.put(ERROR,"Username or email already in use!");
+            System.err.println("TADAAAA");
             return response;
         }
 
@@ -111,8 +114,8 @@ class UserController {
         mailThread.run();
 
         Map<String, String> response = new HashMap<>();
-        response.put("success","true");
-        response.put("error","");
+        response.put(SUCCESS,"true");
+        response.put(ERROR,"");
         return response;
     }
 
@@ -123,13 +126,13 @@ class UserController {
         int correct = userEntityRepository.validate(token);
         if (correct != 1) {
             Map<String, String> response = new HashMap<>();
-            response.put("success","false");
-            response.put("error","The token is not correct!");
+            response.put(SUCCESS,"false");
+            response.put(ERROR,"The token is not correct!");
             return new RedirectView("/token_not_valid.html", true);
         }
         Map<String, String> response = new HashMap<>();
-        response.put("success","true");
-        response.put("error","");
+        response.put(SUCCESS,"true");
+        response.put(ERROR,"");
         return new RedirectView("/", true);
     }
 

@@ -41,6 +41,11 @@ public class CartService {
         }
     }
 
+    public String removeUser(String username) {
+        cart.remove(username);
+        return "true";
+    }
+
     public int getPriceOfItemsPerUser(String username) {
         return cart.entrySet().stream()
                 .filter(entry -> entry.getKey().equals(username))

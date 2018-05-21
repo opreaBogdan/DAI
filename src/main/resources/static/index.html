@@ -197,20 +197,13 @@
 			<div class="butoane">
 
 				<button type="button" id="myPhotos" class="myPhotosButtonas">Fotografiile mele</button>
-				<button type="button" id="addImg"> Adauga Imagini</button>
-				<button type="button" id="chat"> Chat</button>
-				<button type="button" id="signUp">Register</button>
-				<button type="button" id="valBut">Validate</button>
-				<button type="button" id="logIn">LogIn</button>
-				<button type="button" id="logOut">LogOut</button>
-</div>
 				<script>
 					$.ajaxSetup({
 						cache: false
 					});
 					$(document).ready(function () {
 						alert(window.location.href);
-						if(window.location.href.indexOf("validate") > -1) 
+						if(window.location.href.indexOf("validate") > -1)
             			{
                  			alert("Your account has been validated");
 							window.location.href = "http://localhost:8080";
@@ -225,7 +218,7 @@
 							$(".validateDIV").hide();
            	 			}
 
-						if(window.location.href.indexOf("reset") > -1) 
+						if(window.location.href.indexOf("reset") > -1)
             			{
                  			alert("Your password has been reset");
 							window.location = "http://localhost:8080";
@@ -238,7 +231,7 @@
 							$(".show_feed").hide();
 							$("#chatDiv").hide();
 							$(".validateDIV").hide();
-           	 			}	
+           	 			}
 						$("#lista_feed").empty();
 						current_user = "none";
 						var array_photos = [];
@@ -335,8 +328,8 @@
 							$("#chatDiv").hide();
 							$(".validateDIV").hide();
 						});
-						
-						
+
+
 
 						$("#login-form").submit(function (e) {
 							$("#lista_feed").empty();
@@ -372,7 +365,7 @@
 										$(".validateDIV").hide();
 										alert("Welcome, " + username + "!");
 									}
-									$("#login-form")[0].reset();	
+									$("#login-form")[0].reset();
 								},
 
 							});
@@ -400,7 +393,7 @@
 										console.log("You can recover your password via email");
 									}
 									$("#login-form")[0].reset();
-									$("#recover")[0].reset();	
+									$("#recover")[0].reset();
 								},
 
 							});
@@ -437,7 +430,7 @@
 										$(".validateDIV").hide();
 									}
 									$("#login-form")[0].reset();
-									$("#validate-form")[0].reset();	
+									$("#validate-form")[0].reset();
 									$("#signup-form")[0].reset();
 								},
 
@@ -460,10 +453,10 @@
 									type: type,
 									email: mail },
 								success: function (response) {
-									if(response.succes == "false")
+									if(response.success == "false")
 									{
 										alert(response.error);
-										console.log("Recieved singup error");
+										console.log("Received singup error");
 									}
 									else
 									{
@@ -481,7 +474,7 @@
 										$(".validateDIV").show();
 									}
 									$("#login-form")[0].reset();
-									$("#validate-form")[0].reset();	
+									$("#validate-form")[0].reset();
 								},
 
 							});
@@ -489,10 +482,9 @@
 
 						});
 
-						
+
 						$("#logOut").click(function (e) {
 							e.preventDefault();
-							alert("User has logged out")
 							var logout1 = "logout";
 							current_user = "none";
 							array_clicked = [];
@@ -508,11 +500,28 @@
 							$("#chatDiv").hide();
 							$(".validateDIV").hide();
 							$(".PRIMA_PAGINA").show();
+
+							$.ajax({
+								type: "GET",
+								url: "/logout",
+								data: {username: username},
+								success: function (response) {
+									alert("User has logged out");
+								},
+
+							});
 						});
 
 					});
 				</script>
-			
+				<button type="button" id="addImg"> Adauga Imagini</button>
+				<button type="button" id="chat"> Chat</button>
+				<button type="button" id="signUp">Register</button>
+				<button type="button" id="valBut">Validate</button>
+				<button type="button" id="logIn">LogIn</button>
+				<button type="button" id="logOut">LogOut</button>
+			</div>
+
 			<div class="listaFotografi">
 
 				<nav>
