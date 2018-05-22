@@ -123,10 +123,10 @@ public class CartController {
         return response;
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/logout/{username}", method = RequestMethod.GET)
-    public Map<String, Object> logout(@PathVariable("username") String userName) {
 
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public Map<String, Object> logout(@RequestParam Map<String,String> requestParams)  throws Exception{
+        String userName = requestParams.get("userName");
         Map<String, Object> response = new HashMap<>();
         response.put(SUCCESS, cart.removeUser(userName));
         response.put(ERROR, "");

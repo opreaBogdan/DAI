@@ -72,12 +72,12 @@
 					</div>
 				</div>
 
-				<div class="validateDIV" style="display:none;">
-					<form action="./" id="validate-form" method="GET">
-						<label for="token">token:</label>
-						<input type="text" class="aux" id="token" name="token"><br><br>
-						<input type="submit" class="login_button" id="btn_val" name="val" value="Validate">
-					</form>
+				<div class="istoricDIV" style="display:none;">
+					<!--<form action="./" id="validate-form" method="GET">-->
+						<!--<label for="token">token:</label>-->
+						<!--<input type="text" class="aux" id="token" name="token"><br><br>-->
+						<!--<input type="submit" class="login_button" id="btn_val" name="val" value="Validate">-->
+					<!--</form>-->
 				</div>
 
 				<div class="SIGNUPDIV" style="display:none;">
@@ -208,7 +208,7 @@
 					<button type="button" id="addImg"> Adauga Imagini</button>
 					<button type="button" id="chat"> Chat</button>
 					<button type="button" id="signUp">Register</button>
-					<button type="button" id="valBut">Validate</button>
+					<button type="button" id="istoric">Istoric</button>
 					<button type="button" id="logIn">LogIn</button>
 					<button type="button" id="logOut">LogOut</button>
 				</div>
@@ -287,10 +287,10 @@
 							$(".PRIMA_PAGINA").hide();
 							$(".show_feed").hide();
 							$("#chatDiv").hide();
-							$(".validateDIV").hide();
+							$(".istoricDIV").hide();
 						});
 
-						$("#valBut").click(function () {
+						$("#istoric").click(function () {
 							$(".show_feed").hide();
 							$(".loginnDIV").hide();
 							$(".principalDIV").hide();
@@ -299,7 +299,8 @@
 							$(".PRIMA_PAGINA").hide();
 							$(".show_feed").hide();
 							$("#chatDiv").hide();
-							$(".validateDIV").show();
+							$(".istoricDIV").show();
+							displayHistory();
 						});
 
 						$("#signUp").click(function () {
@@ -311,7 +312,7 @@
 							$(".PRIMA_PAGINA").hide();
 							$(".show_feed").hide();
 							$("#chatDiv").hide();
-							$(".validateDIV").hide();
+							$(".istoricDIV").hide();
 						});
 
 
@@ -329,7 +330,7 @@
 									password: password
 								},
 								success: function (response) {
-									if (response.succes == "false") {
+									if (response.success == "false") {
 										alert(response.error);
 										console.log("Recieved authentication error");
 										$("p#cacat1").text("Not logged in");
@@ -347,7 +348,7 @@
 										$(".PRIMA_PAGINA").show();
 										$(".show_feed").hide();
 										$("#chatDiv").hide();
-										$(".validateDIV").hide();
+										$(".istoricDIV").hide();
 										alert("Welcome, " + username + "!");
 									}
 									$("#login-form")[0].reset();
@@ -366,7 +367,7 @@
 								url: "/recover",
 								data: { email: email, password: password },
 								success: function (response) {
-									if (response.succes == "false") {
+									if (response.success == "false") {
 										alert(response.error);
 										console.log("The email entered is not valid");
 										$("p#cacat1").text("Not logged in");
@@ -383,41 +384,60 @@
 							return false;
 						});
 
-						$("#validate-form").submit(function (e) {
+						function displayHistory() {
 							$("#lista_feed").empty();
-							token = $("input#token.aux").val();
 
 							$.ajax({
 								type: "GET",
-								url: "/validate",
-								data: { token: token },
+								url: "/getHistory",
+								data: { username: current_user },
 								success: function (response) {
-									if (response.succes == "false") {
-										alert(response.error);
-										console.log("Recieved authentication error");
+									if (response.success == "false") {
+										$(".istoricDIV").text(response.error);
 									}
 									else {
-										console.log("Recieved validation success");
-										var textul = "Your account has been validated";
-										alert(textul);
-										$(".loginnDIV").show();
-										$(".principalDIV").hide();
-										$(".uploadDiv").hide();
-										$(".SIGNUPDIV").hide();
-										$(".feedback").hide();
-										$(".PRIMA_PAGINA").hide();
-										$(".show_feed").hide();
-										$("#chatDiv").hide();
-										$(".validateDIV").hide();
+									    $('.istoricDIV').empty();
+                                        var table = $('<table>');
+                                        table.css("width", "100%");
+                                        table.css("border", "1px solid black");
+                                        var table_header = $('<tr>');
+                                        table_header.css("border", "1px solid black");
+                                        var col1 = $('<th>').text("DATE");
+                                        var col2 = $('<th>').text("QUANTITY");
+                                        var col3 = $('<th>').text("PRICE");
+                                        col1.css("border", "1px solid black");
+                                        col2.css("border", "1px solid black");
+                                        col3.css("border", "1px solid black");
+                                        table_header.append(col1);
+                                        table_header.append(col2);
+                                        table_header.append(col3);
+                                        table.append(table_header);
+                                        jQuery.each(response.transactions, function() {
+                                            var row = $('<tr>');
+                                            row.css("border", "1px solid black");
+                                            var td1 = $('<td>').text(this.time);
+                                            var td2 = $('<td>').text(this.quantity);
+                                            var td3 = $('<td>').text(this.price);
+                                            td1.attr('align', 'center');
+                                            td2.attr('align', 'center');
+                                            td3.attr('align', 'center');
+                                            td1.css("border", "1px solid black");
+                                            td2.css("border", "1px solid black");
+                                            td3.css("border", "1px solid black");
+                                            row.append(td1);
+                                            row.append(td2);
+                                            row.append(td3);
+                                            table.append(row);
+                                        });
+                                        $('.istoricDIV').append(table);
 									}
 									$("#login-form")[0].reset();
-									$("#validate-form")[0].reset();
 									$("#signup-form")[0].reset();
 								},
 
 							});
 							return false;
-						});
+						}
 
 						$("#signup-form").submit(function (e) {
 							$("#lista_feed").empty();
@@ -435,7 +455,7 @@
 									email: mail
 								},
 								success: function (response) {
-									if (response.succes == "false") {
+									if (response.success == "false") {
 										alert(response.error);
 										console.log("Recieved singup error");
 									}
@@ -451,11 +471,10 @@
 										$(".PRIMA_PAGINA").show();
 										$(".show_feed").hide();
 										$("#chatDiv").hide();
-										$(".validateDIV").hide();
+										$(".istoricDIV").hide();
 									}
 									$("#login-form")[0].reset();
 									$("#signup-form")[0].reset();
-									$("#validate-form")[0].reset();
 								},
 
 							});
@@ -471,7 +490,7 @@
 							$(".PRIMA_PAGINA").hide();
 							$(".show_feed").hide();
 							$("#chatDiv").hide();
-							$(".validateDIV").hide();
+							$(".istoricDIV").hide();
 						});
 
 
@@ -491,7 +510,7 @@
 							$(".PRIMA_PAGINA").hide();
 							$(".show_feed").hide();
 							$("#chatDiv").hide();
-							$(".validateDIV").hide();
+							$(".istoricDIV").hide();
 							$(".PRIMA_PAGINA").show();
 
 							$.ajax({
@@ -515,7 +534,7 @@
 							$(".PRIMA_PAGINA").hide();
 							$(".show_feed").hide();
 							$("#chatDiv").hide();
-							$(".validateDIV").hide();
+							$(".istoricDIV").hide();
 						});
 
 						 $("#upload-image").submit(function (e)

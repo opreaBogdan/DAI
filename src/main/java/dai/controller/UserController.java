@@ -150,11 +150,18 @@ class UserController {
         return new RedirectView("/", true);
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/getHistory/{username}", method = RequestMethod.GET)
-    public Map<String, Object> getHistory(@PathVariable("username") String userName) {
-
+    @RequestMapping(value = "/getHistory", method = RequestMethod.GET)
+    public Map<String, Object> getHistory(@RequestParam Map<String,String> requestParams)  throws Exception{
+        String userName = requestParams.get("username");
         List<TransactionEntity> transactions = transactionEntityRepository.getTransactionsForUser(userName);
+
+        if (transactions == null || transactions.size() == 0) {
+            Map<String, Object> response = new HashMap<>();
+            response.put(SUCCESS,"false");
+            response.put(ERROR,"No image bought");
+            return response;
+        }
+
         Map<String, Object> response = new HashMap<>();
         response.put(SUCCESS,"true");
         response.put(ERROR,"");
@@ -164,9 +171,10 @@ class UserController {
         for (TransactionEntity transaction : transactions) {
             List<Transaction_ImageEntity> image_ids = transactionImageEntityRepository.getImagesForTransaction(transaction.getId());
             Set<ImageEntity> images = new HashSet<>();
+            int price = 0;
             for (Transaction_ImageEntity image_id : image_ids) {
                 ImageEntity image = imageEntityRepository.findOne(image_id.getImage_id());
-                images.add(image);
+                price += image.getPrice();
             }
             calendar.setTimeInMillis(transaction.getTime());
 
@@ -176,10 +184,8 @@ class UserController {
 
             Map<String, Object> transaction_map = new HashMap<>();
             transaction_map.put("time", "" + mYear + "-" + mMonth + "-" + mDay);
-            transaction_map.put("cart",
-                    images.stream()
-                            .map(Image::new)
-                            .collect(Collectors.toList()));
+            transaction_map.put("quantity", transactions.size());
+            transaction_map.put("price", price);
             transactions_list.add(transaction_map);
         }
         response.put(TRANSACTIONS, transactions_list);
