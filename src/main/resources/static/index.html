@@ -106,12 +106,18 @@
 				</div>
 
 				<div class="uploadDiv" style="display:none;">
-					<form id="upload-image" action="./" method="post" enctype="multipart/form-data">
-						<label     style="font-style:'Rock Salt', cursive; font-size: 20px;">Select Your Image
-							<input type="file" id="file_id" name="file"  required />
+					<form id="upload-image"  method="post" enctype="multipart/form-data">
+						<div class="row">
+							<label     style="...">Select Your Image
+								<input type="file" id="file_id" name="file"  required />
 							</label>
+						</div>
+						<div class="row">
+							<label for="token">price:</label>
+							<input type="text" class="aux" id="price" name="price"><br><br>
+						</div>
 						<br/>
-						<input type="submit" value="Upload" class="login_button" />
+						<input type="submit" value="Upload"  class="login_button"/>
 					</form>
 				</div>
 
@@ -510,6 +516,42 @@
 								},
 
 							});
+						});
+
+
+							$("#addImg").click(function () {
+							$(".show_feed").hide();
+							$(".loginnDIV").hide();
+							$(".principalDIV").hide();
+							$(".SIGNUPDIV").hide();
+							$(".uploadDiv").show();
+							$(".PRIMA_PAGINA").hide();
+							$(".show_feed").hide();
+							$("#chatDiv").hide();
+							$(".validateDIV").hide();
+						});
+
+						 $("#upload-image").submit(function (e)
+						 {
+					 		var file_data = $("#file_id").prop("files")[0];
+					 		var price = $("#price").val();
+							var form_data = new FormData();
+                        	form_data.append("file", file_data);
+    						form_data.append("username", current_user);
+    						form_data.append("price", price);
+							$.ajax({
+	    						url: "/addPicture", // Url to which the request is send
+								type: "POST",             // Type of request to be send, called as method
+								data: form_data, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+        						processData: false,
+        						contentType:false,
+								success: function (data)   // A function to be called if request succeeds
+								{
+									$("#upload-image")[0].reset();
+								},
+								async: true
+						  });
+						  return false;
 						});
 
 					});

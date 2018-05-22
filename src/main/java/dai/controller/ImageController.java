@@ -29,13 +29,13 @@ public class ImageController {
         String username = response.getUsername();
 
         String fileName = rs.nextString();
-        BufferedWriter writeFile = new BufferedWriter(new FileWriter(new File(fileName)));
+        /*BufferedWriter writeFile = new BufferedWriter(new FileWriter(new File(fileName)));
         BufferedReader readFile = new BufferedReader(new InputStreamReader(response.getFile().getInputStream(), "UTF-8"));
 
         String line;
         while ((line = readFile.readLine()) != null) {
             writeFile.write(line + "\n");
-        }
+        }*/
 
         imageEntityRepository.save(new ImageEntity(username, fileName, price));
 
