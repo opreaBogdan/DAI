@@ -23,6 +23,7 @@ import static dai.utils.Constants.*;
 
 @RestController
 class UserController {
+    String reset_pass = null;
     @Autowired
     private JavaMailSender sender;
 
@@ -63,6 +64,7 @@ class UserController {
     @RequestMapping(value = "/recover", method = RequestMethod.GET)
     public Map<String, String> recover(@RequestParam Map<String,String> requestParams) throws Exception{
         String email = requestParams.get("email");
+        reset_pass = requestParams.get("password");
 
         RandomString rs = new RandomString();
         String token = rs.nextString();
@@ -85,22 +87,22 @@ class UserController {
     }
 
     @RequestMapping(value = "/reset", method = RequestMethod.GET)
-    public Map<String, String> reset(@RequestParam Map<String,String> requestParams) throws Exception{
+    public RedirectView reset(@RequestParam Map<String,String> requestParams) throws Exception{
         String token = requestParams.get("token");
-        String passowrd = requestParams.get("password");
 
-        int correct = userEntityRepository.updatePasswordByToken(token, passowrd);
-
+        int correct = userEntityRepository.updatePasswordByToken(token, reset_pass);
+        reset_pass = null;
         if (correct != 1) {
             Map<String, String> response = new HashMap<>();
-            response.put(SUCCESS,"false");
-            response.put(ERROR,"The token is not correct!");
-            return response;
+            response.put("success","false");
+            response.put("error","The token is not correct!");
+            return new RedirectView("/token_not_valid.html", true);
         }
+
         Map<String, String> response = new HashMap<>();
-        response.put(SUCCESS,"true");
-        response.put(ERROR,"");
-        return response;
+        response.put("success","true");
+        response.put("error","");
+        return new RedirectView("/", true);
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
