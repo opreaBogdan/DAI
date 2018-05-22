@@ -112,7 +112,9 @@ public class CartController {
         Map<String, Object> response = new HashMap<>();
         if (currentCart.isPresent()) {
             TransactionEntity transaction = transactionEntityRepository.save(new TransactionEntity(userName, System.currentTimeMillis()));
-            currentCart.get().stream().map(x -> transactionImageEntityRepository.save(new Transaction_ImageEntity(x.getId(), transaction.getId())));
+            for (ImageEntity image : currentCart.get()) {
+                transactionImageEntityRepository.save(new Transaction_ImageEntity(image.getId(), transaction.getId()));
+            }
             response.put(SUCCESS, "true");
             response.put(ERROR, "");
         } else {
