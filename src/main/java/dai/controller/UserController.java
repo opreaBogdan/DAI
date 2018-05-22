@@ -2,8 +2,12 @@ package dai.controller;
 
 import dai.entities.ImageEntity;
 import dai.entities.TransactionEntity;
+import dai.entities.Transaction_ImageEntity;
 import dai.entities.UserEntity;
+import dai.mapper.Image;
+import dai.repository.ImageEntityRepository;
 import dai.repository.TransactionEntityRepository;
+import dai.repository.Transaction_ImageEntityRepository;
 import dai.repository.UserEntityRepository;
 import dai.utils.MailSendingThread;
 import dai.utils.RandomString;
@@ -13,10 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
-import static dai.utils.Constants.ERROR;
-import static dai.utils.Constants.SUCCESS;
-import static dai.utils.Constants.rs;
+import static dai.utils.Constants.*;
 
 @RestController
 class UserController {
@@ -25,9 +28,12 @@ class UserController {
 
     @Autowired
     UserEntityRepository userEntityRepository;
-
     @Autowired
     TransactionEntityRepository transactionEntityRepository;
+    @Autowired
+    ImageEntityRepository imageEntityRepository;
+    @Autowired
+    private Transaction_ImageEntityRepository transactionImageEntityRepository;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public Map<String, String> login(@RequestParam Map<String,String> requestParams) throws Exception{
@@ -143,18 +149,38 @@ class UserController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/buy/{username}", method = RequestMethod.GET)
-    public Map<String, Object> buy(@PathVariable("username") String userName) {
+    @RequestMapping(value = "/getHistory/{username}", method = RequestMethod.GET)
+    public Map<String, Object> getHistory(@PathVariable("username") String userName) {
 
         List<TransactionEntity> transactions = transactionEntityRepository.getTransactionsForUser(userName);
-
-        // TODO
         Map<String, Object> response = new HashMap<>();
-        final String[] command = {""};
-//        currentCart.get().stream().map(x -> command[0] = command[0] + x.getId() + ";");
-        transactionEntityRepository.save(new TransactionEntity(userName, command[0], System.currentTimeMillis()));
-        response.put(SUCCESS, "true");
-        response.put(ERROR, "");
+        response.put(SUCCESS,"true");
+        response.put(ERROR,"");
+        List transactions_list = new ArrayList();
+        Calendar calendar = Calendar.getInstance();
+
+        for (TransactionEntity transaction : transactions) {
+            List<Transaction_ImageEntity> image_ids = transactionImageEntityRepository.getImagesForTransaction(transaction.getId());
+            Set<ImageEntity> images = new HashSet<>();
+            for (Transaction_ImageEntity image_id : image_ids) {
+                ImageEntity image = imageEntityRepository.findOne(image_id.getImage_id());
+                images.add(image);
+            }
+            calendar.setTimeInMillis(transaction.getTime());
+
+            int mYear = calendar.get(Calendar.YEAR);
+            int mMonth = calendar.get(Calendar.MONTH);
+            int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+            Map<String, Object> transaction_map = new HashMap<>();
+            transaction_map.put("time", "" + mYear + "-" + mMonth + "-" + mDay);
+            transaction_map.put("cart",
+                    images.stream()
+                            .map(Image::new)
+                            .collect(Collectors.toList()));
+            transactions_list.add(transaction_map);
+        }
+        response.put(TRANSACTIONS, transactions_list);
 
         return response;
     }

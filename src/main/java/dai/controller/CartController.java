@@ -1,7 +1,9 @@
 package dai.controller;
 
 import dai.entities.TransactionEntity;
+import dai.entities.Transaction_ImageEntity;
 import dai.repository.TransactionEntityRepository;
+import dai.repository.Transaction_ImageEntityRepository;
 import dai.services.CartService;
 import dai.mapper.Image;
 import dai.entities.ImageEntity;
@@ -25,6 +27,8 @@ public class CartController {
     private ImageEntityRepository imageEntityRepository;
     @Autowired
     private TransactionEntityRepository transactionEntityRepository;
+    @Autowired
+    private Transaction_ImageEntityRepository transactionImageEntityRepository;
     @Autowired
     private CartService cart;
 
@@ -107,9 +111,8 @@ public class CartController {
         Optional<Set<ImageEntity>> currentCart = cart.getCartPerUser(userName);
         Map<String, Object> response = new HashMap<>();
         if (currentCart.isPresent()) {
-            final String[] command = {""};
-            currentCart.get().stream().map(x -> command[0] = command[0] + x.getId() + ";");
-            transactionEntityRepository.save(new TransactionEntity(userName, command[0], System.currentTimeMillis()));
+            TransactionEntity transaction = transactionEntityRepository.save(new TransactionEntity(userName, System.currentTimeMillis()));
+            currentCart.get().stream().map(x -> transactionImageEntityRepository.save(new Transaction_ImageEntity(x.getId(), transaction.getId())));
             response.put(SUCCESS, "true");
             response.put(ERROR, "");
         } else {
