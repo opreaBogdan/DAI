@@ -107,13 +107,14 @@ public class CartController {
     @ResponseBody
     @RequestMapping(value = "/buy/{username}", method = RequestMethod.GET)
     public Map<String, Object> buy(@PathVariable("username") String userName) {
-
+        System.out.println("yeah");
         Optional<Set<ImageEntity>> currentCart = cart.getCartPerUser(userName);
         Map<String, Object> response = new HashMap<>();
         if (currentCart.isPresent()) {
             TransactionEntity transaction = transactionEntityRepository.save(new TransactionEntity(userName, System.currentTimeMillis()));
             for (ImageEntity image : currentCart.get()) {
                 transactionImageEntityRepository.save(new Transaction_ImageEntity(image.getId(), transaction.getId()));
+                cart.removeFromCart(userName, image);
             }
             response.put(SUCCESS, "true");
             response.put(ERROR, "");

@@ -142,7 +142,7 @@
 
 
 				<div class="cartDiv" style="display:none;">
-					<table style="width:100%"class="table" id="tabek">
+					<table   class="t1" id="tabek">
                         <caption>Your cart</caption>
 
                         <thead>
@@ -151,9 +151,6 @@
 							<th scope="col">Autor</th>
 							<th scope="col">Pret</th>
 						</tr>
-                        <tr class="blank_row">
-                            <td bgcolor="#FFFFFF" colspan="3">&nbsp;</td>
-                        </tr>
 						</thead>
 						<tbody id="hh">
 						<tr>
@@ -164,20 +161,56 @@
 						</tr>
 						</tbody>
 					</table>
-<style>
 
-.blank_row
-{
-    height: 10px !important; /* overwrites any other rules */
-    background-color: #FFFFFF;
-}
- table#tabek {
+<style type="text/css">
+
+  table.t1 {
+    margin: 1em auto;
+    border-collapse: collapse;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .t1 th, .t1 td {
+    padding: 4px 8px;
+  }
+  .t1 thead th {
+    background: #4f81bd;
+    text-transform: lowercase;
+    text-align: left;
+    font-size: 15px;
+    color: #fff;
+  }
+  .t1 tr {
+    border-right: 1px solid #95b3d7;
+  }
+  .t1 tbody tr {
+    border-bottom: 1px solid #95b3d7;
+  }
+  .t1 tbody tr:nth-child(odd) {
+    background: #dbe5f0;
+  }
+  .t1 tbody th, .t1 tbody tr:nth-child(even) td {
+    border-right: 1px solid #95b3d7;
+  }
+  .t1 tfoot th {
+    background: #4f81bd;
+    text-align: left;
+    font-weight: normal;
+    font-size: 10px;
+    color: #fff;
+  }
+  .t1 tr *:nth-child(3), .t1 tr *:nth-child(4) {
+    text-align: right;
+  }
+
+</style>
+
+<style>
+                    table#tabek {
                     width: 100%;
                     background-color: #eee;
                     }
 
 </style>
-
 
 					<form id="cart-form"  method="get" enctype="multipart/form-data">
 						<label for="token">Enter ID for removing photo:</label>
@@ -187,10 +220,38 @@
 				</div>
 
 
+			<div class="cartDivBuy" style="display:none;">
+				<table style="width:100%"class="t1" id="tabek1">
+					<caption>Your cart</caption>
 
+					<thead>
+					<tr>
+						<th scope="col">ID Poza</th>
+						<th scope="col">Autor</th>
+						<th scope="col">Pret</th>
+					</tr>
+					</thead>
+					<tbody id="hh2">
+					<tr>
+						<th scope="row"></th>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+					</tbody>
+				</table>
+<style>
+ table#tabek1 {
+                    width: 100%;
+                    background-color: #eee;
+                    }
+</style>
 
+			<form id="buy-from-cart-form"  method="get" enctype="multipart/form-data">
 
-
+				<input type="submit" value="Buy"  class="login_button"/>
+				</form>
+			</div>
 
 
 
@@ -268,6 +329,8 @@
 					<button type="button" id="logIn">LogIn</button>
 					<button type="button" id="logOut">LogOut</button>
 					<button type="button" id="getCart">GetCart</button>
+					<button type="button" id="buyPhoto">Buy Photos</button>
+
 				</div>
 				<script>
 					$.ajaxSetup({
@@ -346,6 +409,8 @@
 							$("#chatDiv").hide();
 							$(".istoricDIV").hide();
 							$(".cartDiv").hide();
+							$(".cartDivBuy").hide();
+
 
 						});
 
@@ -360,6 +425,8 @@
 							$("#chatDiv").hide();
 							$(".istoricDIV").show();
 							$(".cartDiv").hide();
+							$(".cartDivBuy").hide();
+
 							displayHistory();
 						});
 
@@ -374,10 +441,12 @@
 							$("#chatDiv").hide();
 							$(".istoricDIV").hide();
 							$(".cartDiv").hide();
+							$(".cartDivBuy").hide();
+
 
 						});
 
-						$("#getCart").click(function () {
+						$("#buyPhoto").click(function () {
 							$.ajax({
 								type: "GET",
 								url: "/seeCart/"+current_user,
@@ -385,7 +454,95 @@
 									if (response.succes == "false") {
 									}
 									else {
-										alert("lala");
+										function loadTable(tableId, fields, data) {
+											//$('#' + tableId).empty(); //not really necessary
+											var rows = '';
+
+											$.each(data, function(index, item) {
+												var row = '<tr>';
+												$.each(fields, function(index, field) {
+													row += '<td>' + item[field+''] + '</td>';
+												});
+												rows += row + '<tr>';
+											});
+											$('#' + tableId).html(rows);
+										}
+										loadTable('hh2', ['id', 'username', 'price'], response.cart);
+
+
+
+									}
+
+
+								},
+
+								});
+							$(".show_feed").hide();
+							$(".loginnDIV").hide();
+							$(".principalDIV").hide();
+							$(".SIGNUPDIV").hide();
+							$(".uploadDiv").hide();
+							$(".PRIMA_PAGINA").hide();
+							$(".show_feed").hide();
+							$("#chatDiv").hide();
+							$(".validateDIV").hide();
+							$(".validateDIV").hide();
+							$(".cartDiv").hide();
+							$(".cartDivBuy").show();
+						});
+
+
+							$("#buy-from-cart-form").submit(function (e) {
+
+							$.ajax({
+								type: "GET",
+								url: "/buy/"+current_user,
+								success: function (response) {
+									if (response.succes == "false") {
+										alert(response.error);
+										console.log("Recieved authentication error");
+										$("p#cacat1").text("Not logged in");
+									}
+									else {
+										console.log("Recieved authentication success");
+										current_user = username;
+										var textul = "Logged in as " + username;
+										$("p#avem").text(textul);
+										$(".loginnDIV").hide();
+										$(".principalDIV").hide();
+										$(".uploadDiv").hide();
+										$(".SIGNUPDIV").hide();
+										$(".feedback").hide();
+										$(".PRIMA_PAGINA").hide();
+										$(".show_feed").hide();
+										$("#chatDiv").hide();
+										$(".validateDIV").hide();
+										alert("You have bought everything from your cart, " + username + "!");
+										var x = document.getElementById ("hh2");
+										hh2.refresh();
+
+									}
+
+									$("#buy-from-cart-form")[0].reset();
+								},
+
+							});
+							return false;
+						});
+
+
+
+
+
+
+							$("#getCart").click(function () {
+							$.ajax({
+								type: "GET",
+								url: "/seeCart/"+current_user,
+								success: function (response) {
+									if (response.succes == "false") {
+									}
+									else {
 										function loadTable(tableId, fields, data) {
 											//$('#' + tableId).empty(); //not really necessary
 											var rows = '';
@@ -418,6 +575,7 @@
 							$("#chatDiv").hide();
 							$(".validateDIV").hide();
 							$(".validateDIV").hide();
+							$(".cartDivBuy").hide();
 							$(".cartDiv").show();
 						});
 
@@ -427,16 +585,11 @@
 
 							$.ajax({
 								type: "GET",
-								url: "/removeFrom",
-								data: {
-									username: current_user,
-									id: id
-								},
+								url: "/removeFromCart/"+id+"/"+current_user,
 								success: function (response) {
 									if (response.succes == "false") {
-										alert(response.error);
-										console.log("Recieved authentication error");
-										$("p#cacat1").text("Not logged in");
+										alert("For some reason, this item could not be removed from cart");
+
 									}
 									else {
 										console.log("Recieved authentication success");
@@ -447,14 +600,14 @@
 										$(".principalDIV").hide();
 										$(".uploadDiv").hide();
 										$(".SIGNUPDIV").hide();
-										$(".feedback").show();
-										$(".PRIMA_PAGINA").show();
+										$(".feedback").hide();
+										$(".PRIMA_PAGINA").hide();
 										$(".show_feed").hide();
 										$("#chatDiv").hide();
 										$(".validateDIV").hide();
-										alert("Welcome, " + username + "!");
+										alert("You have suvccessfully removed item with id " + id + "!");
 									}
-									$("#login-form")[0].reset();
+									$("#cart-form")[0].reset();
 								},
 
 							});
@@ -639,6 +792,7 @@
 							$("#chatDiv").hide();
 							$(".istoricDIV").hide();
 							$(".cartDiv").hide();
+							$(".cartDivBuy").hide();
 
 						});
 
@@ -662,6 +816,7 @@
 							$(".istoricDIV").hide();
 							$(".PRIMA_PAGINA").show();
 							$(".cartDiv").hide();
+							$(".cartDivBuy").hide();
 
 
 							$.ajax({
@@ -687,6 +842,8 @@
 							$("#chatDiv").hide();
 							$(".istoricDIV").hide();
 							$(".cartDiv").hide();
+							$(".cartDivBuy").hide();
+
 
 						});
 
@@ -727,7 +884,7 @@
 		</div>
 	</div>
 	<footer>
-		<p> Copyright All rights reserved to Roxana Pavelescu</p>
+		<p> Copyright All rights reserved to everyone on Earth</p>
 	</footer>
 
 </body>
