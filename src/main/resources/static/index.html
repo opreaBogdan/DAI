@@ -139,6 +139,62 @@
 				</div>
 
 
+
+
+				<div class="cartDiv" style="display:none;">
+					<table style="width:100%"class="table" id="tabek">
+                        <caption>Your cart</caption>
+
+                        <thead>
+						<tr>
+							<th scope="col">ID Poza</th>
+							<th scope="col">Autor</th>
+							<th scope="col">Pret</th>
+						</tr>
+                        <tr class="blank_row">
+                            <td bgcolor="#FFFFFF" colspan="3">&nbsp;</td>
+                        </tr>
+						</thead>
+						<tbody id="hh">
+						<tr>
+							<th scope="row"></th>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+						</tbody>
+					</table>
+<style>
+
+.blank_row
+{
+    height: 10px !important; /* overwrites any other rules */
+    background-color: #FFFFFF;
+}
+ table#tabek {
+                    width: 100%;
+                    background-color: #eee;
+                    }
+
+</style>
+
+
+					<form id="cart-form"  method="get" enctype="multipart/form-data">
+						<label for="token">Enter ID for removing photo:</label>
+						<input type="text" class="aux" id="del_from" name="price"><br><br>
+						<input type="submit" value="Remove"  class="login_button"/>
+					</form>
+				</div>
+
+
+
+
+
+
+
+
+
+
 				<div class="principalDIV" style="display:none;">
 					<article id="principal">
 						<header>
@@ -208,9 +264,10 @@
 					<button type="button" id="addImg"> Adauga Imagini</button>
 					<button type="button" id="chat"> Chat</button>
 					<button type="button" id="signUp">Register</button>
-					<button type="button" id="istoric">Istoric</button>
+					<button type="button" id="valBut">Validate</button>
 					<button type="button" id="logIn">LogIn</button>
 					<button type="button" id="logOut">LogOut</button>
+					<button type="button" id="getCart">GetCart</button>
 				</div>
 				<script>
 					$.ajaxSetup({
@@ -288,6 +345,8 @@
 							$(".show_feed").hide();
 							$("#chatDiv").hide();
 							$(".istoricDIV").hide();
+							$(".cartDiv").hide();
+
 						});
 
 						$("#istoric").click(function () {
@@ -300,6 +359,7 @@
 							$(".show_feed").hide();
 							$("#chatDiv").hide();
 							$(".istoricDIV").show();
+							$(".cartDiv").hide();
 							displayHistory();
 						});
 
@@ -313,8 +373,93 @@
 							$(".show_feed").hide();
 							$("#chatDiv").hide();
 							$(".istoricDIV").hide();
+							$(".cartDiv").hide();
+
 						});
 
+						$("#getCart").click(function () {
+							$.ajax({
+								type: "GET",
+								url: "/seeCart/"+current_user,
+								success: function (response) {
+									if (response.succes == "false") {
+									}
+									else {
+										alert("lala");
+										function loadTable(tableId, fields, data) {
+											//$('#' + tableId).empty(); //not really necessary
+											var rows = '';
+
+											$.each(data, function(index, item) {
+												var row = '<tr>';
+												$.each(fields, function(index, field) {
+													row += '<td>' + item[field+''] + '</td>';
+												});
+												rows += row + '<tr>';
+											});
+											$('#' + tableId).html(rows);
+										}
+										loadTable('hh', ['id', 'username', 'price'], response.cart);
+
+
+									}
+
+
+								},
+
+								});
+							$(".show_feed").hide();
+							$(".loginnDIV").hide();
+							$(".principalDIV").hide();
+							$(".SIGNUPDIV").hide();
+							$(".uploadDiv").hide();
+							$(".PRIMA_PAGINA").hide();
+							$(".show_feed").hide();
+							$("#chatDiv").hide();
+							$(".validateDIV").hide();
+							$(".validateDIV").hide();
+							$(".cartDiv").show();
+						});
+
+						$("#cart-form").submit(function (e) {
+							$("#lista_feed").empty();
+							id = $("input#del_from.aux").val();
+
+							$.ajax({
+								type: "GET",
+								url: "/removeFrom",
+								data: {
+									username: current_user,
+									id: id
+								},
+								success: function (response) {
+									if (response.succes == "false") {
+										alert(response.error);
+										console.log("Recieved authentication error");
+										$("p#cacat1").text("Not logged in");
+									}
+									else {
+										console.log("Recieved authentication success");
+										current_user = username;
+										var textul = "Logged in as " + username;
+										$("p#avem").text(textul);
+										$(".loginnDIV").hide();
+										$(".principalDIV").hide();
+										$(".uploadDiv").hide();
+										$(".SIGNUPDIV").hide();
+										$(".feedback").show();
+										$(".PRIMA_PAGINA").show();
+										$(".show_feed").hide();
+										$("#chatDiv").hide();
+										$(".validateDIV").hide();
+										alert("Welcome, " + username + "!");
+									}
+									$("#login-form")[0].reset();
+								},
+
+							});
+							return false;
+						});
 
 
 						$("#login-form").submit(function (e) {
@@ -330,7 +475,7 @@
 									password: password
 								},
 								success: function (response) {
-									if (response.success == "false") {
+									if (response.succes == "false") {
 										alert(response.error);
 										console.log("Recieved authentication error");
 										$("p#cacat1").text("Not logged in");
@@ -384,7 +529,7 @@
 							return false;
 						});
 
-						function displayHistory() {
+                    function displayHistory() {
 							$("#lista_feed").empty();
 
 							$.ajax({
@@ -472,6 +617,8 @@
 										$(".show_feed").hide();
 										$("#chatDiv").hide();
 										$(".istoricDIV").hide();
+										$(".cartDiv").hide();
+
 									}
 									$("#login-form")[0].reset();
 									$("#signup-form")[0].reset();
@@ -491,6 +638,8 @@
 							$(".show_feed").hide();
 							$("#chatDiv").hide();
 							$(".istoricDIV").hide();
+							$(".cartDiv").hide();
+
 						});
 
 
@@ -512,6 +661,8 @@
 							$("#chatDiv").hide();
 							$(".istoricDIV").hide();
 							$(".PRIMA_PAGINA").show();
+							$(".cartDiv").hide();
+
 
 							$.ajax({
 								type: "GET",
@@ -535,6 +686,8 @@
 							$(".show_feed").hide();
 							$("#chatDiv").hide();
 							$(".istoricDIV").hide();
+							$(".cartDiv").hide();
+
 						});
 
 						 $("#upload-image").submit(function (e)

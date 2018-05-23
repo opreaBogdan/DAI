@@ -7,8 +7,8 @@ import dai.entities.ImageEntity;
 public class Image {
     @JsonProperty("id")
     private long id;
-    @JsonProperty("userName")
-    private String userName;
+    @JsonProperty("username")
+    private String username;
     @JsonProperty("location")
     private String location;
     @JsonProperty("price")
@@ -34,12 +34,12 @@ public class Image {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String userName) {
+        this.username = userName;
     }
 
     public String getLocation() {
@@ -63,7 +63,7 @@ public class Image {
     public void setSold(int sold) { this.sold = sold; }
 
     public Image(long id, String userName, String location, int price, boolean bought) {
-        this.userName = userName;
+        this.username = userName;
         this.location = location;
         this.id = id;
         this.price = price;
@@ -71,7 +71,7 @@ public class Image {
     }
 
     public Image(ImageEntity imageEntity) {
-        this.userName = imageEntity.getUsername();
+        this.username = imageEntity.getUsername();
         this.location = imageEntity.getLocation();
         this.id = imageEntity.getId();
         this.price = imageEntity.getPrice();
