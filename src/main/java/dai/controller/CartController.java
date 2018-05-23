@@ -112,12 +112,13 @@ public class CartController {
         Map<String, Object> response = new HashMap<>();
         if (currentCart.isPresent()) {
             TransactionEntity transaction = transactionEntityRepository.save(new TransactionEntity(userName, System.currentTimeMillis()));
-            for (ImageEntity image : currentCart.get()) {
+            Set<ImageEntity> images = currentCart.get();
+            for (ImageEntity image : images) {
                 transactionImageEntityRepository.save(new Transaction_ImageEntity(image.getId(), transaction.getId()));
-                cart.removeFromCart(userName, image);
             }
             response.put(SUCCESS, "true");
             response.put(ERROR, "");
+            cart.removeUser(userName);
         } else {
             response.put(SUCCESS, "false");
             response.put(ERROR, "There are no images in the users cart");
