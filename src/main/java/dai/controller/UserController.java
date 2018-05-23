@@ -172,6 +172,7 @@ class UserController {
             List<Transaction_ImageEntity> image_ids = transactionImageEntityRepository.getImagesForTransaction(transaction.getId());
             Set<ImageEntity> images = new HashSet<>();
             int price = 0;
+            System.out.println(image_ids.size());
             for (Transaction_ImageEntity image_id : image_ids) {
                 ImageEntity image = imageEntityRepository.findOne(image_id.getImage_id());
                 price += image.getPrice();
@@ -184,7 +185,7 @@ class UserController {
 
             Map<String, Object> transaction_map = new HashMap<>();
             transaction_map.put("time", "" + mYear + "-" + mMonth + "-" + mDay);
-            transaction_map.put("quantity", transactions.size());
+            transaction_map.put("quantity", image_ids.size());
             transaction_map.put("price", price);
             transactions_list.add(transaction_map);
         }

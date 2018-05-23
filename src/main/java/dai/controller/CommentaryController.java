@@ -50,11 +50,12 @@ public class CommentaryController {
             @NotNull @PathVariable("photoId") long photoId,
             @NotNull @PathVariable("authorName") String authorName,
             @RequestBody String commentary) {
-
+        String comm_final = commentary.replaceAll("\\+"," ");
+        String comm_final2 = comm_final.replaceAll("=","");
         String success = "true";
         String error = "";
         try {
-            commentaryEntityRepository.insertCommentaryToPicture(photoId, authorName, commentary);
+            commentaryEntityRepository.insertCommentaryToPicture(photoId, authorName, comm_final2);
         }catch (Exception e) {
             success = "false";
             error = e.getMessage();

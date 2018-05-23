@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
+import java.nio.file.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,8 +28,9 @@ public class ImageController {
         }
         int price = response.getPrice();
         String username = response.getUsername();
-
-        String fileName = rs.nextString();
+        /*
+        String fileName = rs.nextString() + ".jpg";
+        File file = new File(fileName);
         BufferedWriter writeFile = new BufferedWriter(new FileWriter(new File(fileName)));
         BufferedReader readFile = new BufferedReader(new InputStreamReader(response.getFile().getInputStream(), "UTF-8"));
 
@@ -36,6 +38,20 @@ public class ImageController {
         while ((line = readFile.readLine()) != null) {
             writeFile.write(line + "\n");
         }
+
+        String path = file.getAbsolutePath();
+        String s = path.replaceAll("\\\\", "$0$0");
+        System.out.println(s);
+        Files.copy(response.getFile().getInputStream(), fileName);
+        */
+        String fileName = rs.nextString() + ".jpg";
+        String filePath = ".\\src\\main\\resources\\static\\" + fileName;
+        // Get the file and save it somewhere
+        byte[] bytes = response.getFile().getBytes();
+        Path path = Paths.get(filePath);
+        Files.write(path, bytes);
+
+        //console call
 
         imageEntityRepository.save(new ImageEntity(username, fileName, price));
 
@@ -52,7 +68,7 @@ public class ImageController {
 
         String success = "true";
         String error = "";
-        if(!requestParams.isEmpty()) {
+        if(!requestParams.isEmpty() && requestParams.get("minPrice") != null) {
             int minPrice = Integer.parseInt(requestParams.get("minPrice"));
             int maxPrice = Integer.parseInt(requestParams.get("maxPrice"));
             String author = requestParams.get("username");

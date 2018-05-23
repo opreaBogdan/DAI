@@ -74,9 +74,9 @@
 
 				<div class="istoricDIV" style="display:none;">
 					<!--<form action="./" id="validate-form" method="GET">-->
-						<!--<label for="token">token:</label>-->
-						<!--<input type="text" class="aux" id="token" name="token"><br><br>-->
-						<!--<input type="submit" class="login_button" id="btn_val" name="val" value="Validate">-->
+					<!--<label for="token">token:</label>-->
+					<!--<input type="text" class="aux" id="token" name="token"><br><br>-->
+					<!--<input type="submit" class="login_button" id="btn_val" name="val" value="Validate">-->
 					<!--</form>-->
 				</div>
 
@@ -102,38 +102,43 @@
 				<div class="PRIMA_PAGINA">
 					<p id="avem"> Not logged in </p>
 					<p id="initial_text"> WELCOME! </p>
-					<iframe width="854" height="480" src="https://www.youtube.com/embed/8TbWgwBz2EI" allowfullscreen></iframe>
+					<iframe width="854" height="480" src="https://www.youtube.com/embed/Hf15xj8unQY" frameborder="0" allow="autoplay; encrypted-media"
+					 allowfullscreen></iframe>
 					<p id="ordine_link"> </p>
 					<p id="most_mouse"> </p>
 				</div>
 
 				<div class="uploadDiv" style="display:none;">
-					<form id="upload-image"  method="post" enctype="multipart/form-data">
+					<form id="upload-image" method="post" enctype="multipart/form-data">
 						<div class="row">
-							<label     style="...">Select Your Image
+							<label style="...">Select Your Image
 								<input type="file" id="file_id" name="file"  required />
 							</label>
 						</div>
 						<div class="row">
-							<label for="token">price:</label>
-							<input type="text" class="aux" id="price" name="price"><br><br>
+							<label for="token">Price:</label>
+							<input type="text" class="aux" id="price" name="price" placeholder="price"><br><br>
 						</div>
 						<br/>
-						<input type="submit" value="Upload"  class="login_button"/>
+						<input type="submit" value="Upload" class="login_button" />
 					</form>
 				</div>
 
 				<div id="chatDiv" style="display:none;">
 
-					<nav id="div_chat">
-						<ul id="lista_chat" class="liista">
-
-						</ul>
-					</nav>
-
-					<form id="chat-Form" method="post" action="./">
-						<input id="chatText" name="chatText" maxlength="255" class="aux" />
-						<input type="submit" class="login_button" value="Semd" />
+					<form id="chat-Form">
+						<div class="row">
+							<input type="text" placeholder="Min Price" class="aux" id="minPrice" name="pass">
+						</div>
+						<div class="row">
+							<input type="text" placeholder="Max Price" class="aux" id="maxPrice" name="pass">
+						</div>
+						<div class="row">
+							<input type="text" placeholder="Author" class="aux" id="author" name="pass">
+						</div>
+						<div class="row">
+							<input type="submit" class="login_button" id="btn_search" name="val" value="Search">
+						</div>
 					</form>
 
 				</div>
@@ -142,116 +147,124 @@
 
 
 				<div class="cartDiv" style="display:none;">
-					<table   class="t1" id="tabek">
-                        <caption>Your cart</caption>
+					<table class="t1" id="tabek">
+						<caption>Your cart</caption>
 
-                        <thead>
-						<tr>
-							<th scope="col">ID Poza</th>
-							<th scope="col">Autor</th>
-							<th scope="col">Pret</th>
-						</tr>
+						<thead>
+							<tr>
+								<th scope="col">ID Poza</th>
+								<th scope="col">Autor</th>
+								<th scope="col">Pret</th>
+							</tr>
 						</thead>
 						<tbody id="hh">
-						<tr>
-							<th scope="row"></th>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
+							<tr>
+								<th scope="row"></th>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
 						</tbody>
 					</table>
 
-<style type="text/css">
+					<style type="text/css">
+						table.t1 {
+							margin: 1em auto;
+							border-collapse: collapse;
+							font-family: Arial, Helvetica, sans-serif;
+						}
+						
+						.t1 th,
+						.t1 td {
+							padding: 4px 8px;
+						}
+						
+						.t1 thead th {
+							background: #4f81bd;
+							text-transform: lowercase;
+							text-align: left;
+							font-size: 15px;
+							color: #fff;
+						}
+						
+						.t1 tr {
+							border-right: 1px solid #95b3d7;
+						}
+						
+						.t1 tbody tr {
+							border-bottom: 1px solid #95b3d7;
+						}
+						
+						.t1 tbody tr:nth-child(odd) {
+							background: #dbe5f0;
+						}
+						
+						.t1 tbody th,
+						.t1 tbody tr:nth-child(even) td {
+							border-right: 1px solid #95b3d7;
+						}
+						
+						.t1 tfoot th {
+							background: #4f81bd;
+							text-align: left;
+							font-weight: normal;
+							font-size: 10px;
+							color: #fff;
+						}
+						
+						.t1 tr *:nth-child(3),
+						.t1 tr *:nth-child(4) {
+							text-align: right;
+						}
+					</style>
 
-  table.t1 {
-    margin: 1em auto;
-    border-collapse: collapse;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  .t1 th, .t1 td {
-    padding: 4px 8px;
-  }
-  .t1 thead th {
-    background: #4f81bd;
-    text-transform: lowercase;
-    text-align: left;
-    font-size: 15px;
-    color: #fff;
-  }
-  .t1 tr {
-    border-right: 1px solid #95b3d7;
-  }
-  .t1 tbody tr {
-    border-bottom: 1px solid #95b3d7;
-  }
-  .t1 tbody tr:nth-child(odd) {
-    background: #dbe5f0;
-  }
-  .t1 tbody th, .t1 tbody tr:nth-child(even) td {
-    border-right: 1px solid #95b3d7;
-  }
-  .t1 tfoot th {
-    background: #4f81bd;
-    text-align: left;
-    font-weight: normal;
-    font-size: 10px;
-    color: #fff;
-  }
-  .t1 tr *:nth-child(3), .t1 tr *:nth-child(4) {
-    text-align: right;
-  }
+					<style>
+						table#tabek {
+							width: 100%;
+							background-color: #eee;
+						}
+					</style>
 
-</style>
-
-<style>
-                    table#tabek {
-                    width: 100%;
-                    background-color: #eee;
-                    }
-
-</style>
-
-					<form id="cart-form"  method="get" enctype="multipart/form-data">
+					<form id="cart-form" method="get" enctype="multipart/form-data">
 						<label for="token">Enter ID for removing photo:</label>
 						<input type="text" class="aux" id="del_from" name="price"><br><br>
-						<input type="submit" value="Remove"  class="login_button"/>
+						<input type="submit" value="Remove" class="login_button" />
 					</form>
 				</div>
 
 
-			<div class="cartDivBuy" style="display:none;">
-				<table style="width:100%"class="t1" id="tabek1">
-					<caption>Your cart</caption>
+				<div class="cartDivBuy" style="display:none;">
+					<table style="width:100%" class="t1" id="tabek1">
+						<caption>Your cart</caption>
 
-					<thead>
-					<tr>
-						<th scope="col">ID Poza</th>
-						<th scope="col">Autor</th>
-						<th scope="col">Pret</th>
-					</tr>
-					</thead>
-					<tbody id="hh2">
-					<tr>
-						<th scope="row"></th>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-					</tbody>
-				</table>
-<style>
- table#tabek1 {
-                    width: 100%;
-                    background-color: #eee;
-                    }
-</style>
+						<thead>
+							<tr>
+								<th scope="col">ID Poza</th>
+								<th scope="col">Autor</th>
+								<th scope="col">Pret</th>
+							</tr>
+						</thead>
+						<tbody id="hh2">
+							<tr>
+								<th scope="row"></th>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+						</tbody>
+					</table>
+					<style>
+						table#tabek1 {
+							width: 100%;
+							background-color: #eee;
+						}
+					</style>
 
-			<form id="buy-from-cart-form"  method="get" enctype="multipart/form-data">
+					<form id="buy-from-cart-form" method="get" enctype="multipart/form-data">
 
-				<input type="submit" value="Buy"  class="login_button"/>
-				</form>
-			</div>
+						<input type="submit" value="Buy" class="login_button" />
+					</form>
+				</div>
 
 
 
@@ -259,7 +272,7 @@
 				<div class="principalDIV" style="display:none;">
 					<article id="principal">
 						<header>
-							<p id="n_foto">Nume Fotograf</p>
+							<p id="n_foto">Current Picture</p>
 						</header>
 						<div class="eLogat" style="display:none;">'
 							<p id="cacat1"> Not logged in </p>
@@ -273,11 +286,15 @@
 						<button class="butoane" id="b_dreapta"> &lt; </button>
 
 
-						<p class="Comment"> Poza Curenta</p>
+						<p class="Comment" id="detailsf" style="font-size:35px;  font-family: Arial, Helvetica, sans-serif;"> To see details click below</p>
 
+						<div class="row">
+							<button type="button" id="showDetails" class="aux" style="height:20%; width:33%"> ShowDetails </button>
+							<button type="button" id="showFeed" class="aux" style="height:20%; width:33%"> ShowFeedback </button>
+							<button type="button" id="addToCart" class="aux" style="height:20%; width:33%"> AddToCart </button>
+						</div>
 
-						<button type="button" id="showFeed" class="feed"> ShowFeedback </button>
-						<div class="show_feed" style="display:none;">
+						<div class="show_feed" id="feedback" style="display:none;">
 							<header>
 								<h3>Feedback</h3>
 							</header>
@@ -290,23 +307,11 @@
 
 
 							<div class="feedback" style="display:none;">
-								<div class="stars">
-									<form action="./" id="to_reset_form">
-										<input class="star star-5" id="star-5" type="radio" name="star" />
-										<label class="star star-5" for="star-5"></label>
-										<input class="star star-4" id="star-4" type="radio" name="star" />
-										<label class="star star-4" for="star-4"></label>
-										<input class="star star-3" id="star-3" type="radio" name="star" />
-										<label class="star star-3" for="star-3"></label>
-										<input class="star star-2" id="star-2" type="radio" name="star" />
-										<label class="star star-2" for="star-2"></label>
-										<input class="star star-1" id="star-1" type="radio" name="star" />
-										<label class="star star-1" for="star-1"></label>
-										<input id="comment1" type="text" name="comm" />
-									</form>
+								<form action="./" id="to_reset_form">
+									<input id="comment1" type="text" name="comm" class="aux" />
+								</form>
 
-									<button type="button" id="addFeedback" class="feed"> Add FeedBack </button>
-								</div>
+								<button type="button" id="addFeedback" class="feed"> Add FeedBack </button>
 							</div>
 						</div>
 					</article>
@@ -315,17 +320,16 @@
 			<div class="coloanaStanga">
 				<select class="dropdown" id="drp">
 				<option value="menu" class="dropdown-content">Menu</option>
-                <option value="main" class="dropdown-content">MainPage</option>
 			</select>
 
 
 				<div class="butoane">
 
-					<button type="button" id="myPhotos" class="myPhotosButtonas">Fotografiile mele</button>
-					<button type="button" id="addImg"> Adauga Imagini</button>
-					<button type="button" id="chat"> Chat</button>
+					<button type="button" id="myPhotos" class="myPhotosButtonas">Photos</button>
+					<button type="button" id="addImg"> UploadPhoto</button>
+					<button type="button" id="chat"> SearchPhotos</button>
 					<button type="button" id="signUp">Register</button>
-					<button type="button" id="valBut">Validate</button>
+					<button type="button" id="istoric">Istoric</button>
 					<button type="button" id="logIn">LogIn</button>
 					<button type="button" id="logOut">LogOut</button>
 					<button type="button" id="getCart">GetCart</button>
@@ -339,6 +343,7 @@
 					$(document).ready(function () {
 						$("#lista_feed").empty();
 						current_user = "none";
+						type_u = "none";
 						var array_photos = [];
 						var array_clicked = [];
 						var index = 0;
@@ -349,85 +354,64 @@
 						var div_addimg = 0;
 						var div_main = 0;
 
-
-						function myDisplay() {
-							$("#lista_feed").empty();
-							var form_data = new FormData();
-
-							form_data.append("fotog", array_photos[index]);
-
-							$.ajax
-								({
-									url: "show_feedback.php", // Url to which the request is send
-									type: "POST",             // Type of request to be send, called as method
-									data: form_data, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
-									contentType: false,       // The content type used when sending data to the server.
-									cache: false,             // To unable request pages to be cached
-									processData: false,        // To send DOMDocument or non processed data file it is set to false
-									success: function (data)   // A function to be called if request succeeds
-									{
-										if (data != "Nu") {
-											var obj = $.parseJSON(data);
-											var arrayLength = obj.feedback.length;
-											for (var i = 0; i < arrayLength; i++) {
-
-												var ul = document.getElementById("lista_feed");
-												var li = document.createElement("li");
-												var a = document.createElement("article");
-												var head = document.createElement("header");
-												var hh = document.createElement("h4");
-												var par = document.createElement("p");
-												head.textContent = obj.feedback[i].user + "  said:";
-												hh.textContent = "		   Rated at:" + obj.feedback[i].stele;
-												par.textContent = obj.feedback[i].comm;
-
-
-												head.appendChild(hh);
-												a.appendChild(head);
-												a.append(par);
-												li.appendChild(a);
-												ul.appendChild(li);
-											}
-										}
-										$(".show_feed").show();
-
-									},
-
-
-								});
-						}
-
+						$("#chat").click(function () {
+							if (current_user != "none") {
+								$(".show_feed").hide();
+								$(".loginnDIV").hide();
+								$(".principalDIV").hide();
+								$(".SIGNUPDIV").hide();
+								$(".uploadDiv").hide();
+								$(".PRIMA_PAGINA").hide();
+								$(".show_feed").hide();
+								$("#chatDiv").show();
+								$(".validateDIV").hide();
+								$(".istoricDIV").hide();
+								$(".cartDiv").hide();
+								$(".cartDivBuy").hide();
+							}
+							else {
+								alert("You must be authenticated for this opperation");
+							}
+						});
 
 						$("#logIn").click(function () {
-							$(".show_feed").hide();
-							$(".loginnDIV").show();
-							$(".principalDIV").hide();
-							$(".SIGNUPDIV").hide();
-							$(".uploadDiv").hide();
-							$(".PRIMA_PAGINA").hide();
-							$(".show_feed").hide();
-							$("#chatDiv").hide();
-							$(".istoricDIV").hide();
-							$(".cartDiv").hide();
-							$(".cartDivBuy").hide();
-
-
+							if (current_user == "none") {
+								$(".show_feed").hide();
+								$(".loginnDIV").show();
+								$(".principalDIV").hide();
+								$(".SIGNUPDIV").hide();
+								$(".uploadDiv").hide();
+								$(".PRIMA_PAGINA").hide();
+								$(".show_feed").hide();
+								$("#chatDiv").hide();
+								$(".validateDIV").hide();
+								$(".istoricDIV").hide();
+								$(".cartDiv").hide();
+								$(".cartDivBuy").hide();
+							}
+							else {
+								alert("You must logout first!");
+							}
 						});
 
 						$("#istoric").click(function () {
-							$(".show_feed").hide();
-							$(".loginnDIV").hide();
-							$(".principalDIV").hide();
-							$(".SIGNUPDIV").hide();
-							$(".uploadDiv").hide();
-							$(".PRIMA_PAGINA").hide();
-							$(".show_feed").hide();
-							$("#chatDiv").hide();
-							$(".istoricDIV").show();
-							$(".cartDiv").hide();
-							$(".cartDivBuy").hide();
+							if (current_user != "none") {
+								$(".show_feed").hide();
+								$(".loginnDIV").hide();
+								$(".principalDIV").hide();
+								$(".SIGNUPDIV").hide();
+								$(".uploadDiv").hide();
+								$(".PRIMA_PAGINA").hide();
+								$(".show_feed").hide();
+								$("#chatDiv").hide();
+								$(".istoricDIV").show();
+								$(".cartDiv").hide();
+								$(".cartDivBuy").hide();
 
-							displayHistory();
+								displayHistory();
+							} else {
+								alert("You must be authenticated for this opperation");
+							}
 						});
 
 						$("#signUp").click(function () {
@@ -443,13 +427,12 @@
 							$(".cartDiv").hide();
 							$(".cartDivBuy").hide();
 
-
 						});
 
 						$("#buyPhoto").click(function () {
 							$.ajax({
 								type: "GET",
-								url: "/seeCart/"+current_user,
+								url: "/seeCart/" + current_user,
 								success: function (response) {
 									if (response.succes == "false") {
 									}
@@ -458,10 +441,10 @@
 											//$('#' + tableId).empty(); //not really necessary
 											var rows = '';
 
-											$.each(data, function(index, item) {
+											$.each(data, function (index, item) {
 												var row = '<tr>';
-												$.each(fields, function(index, field) {
-													row += '<td>' + item[field+''] + '</td>';
+												$.each(fields, function (index, field) {
+													row += '<td>' + item[field + ''] + '</td>';
 												});
 												rows += row + '<tr>';
 											});
@@ -476,27 +459,28 @@
 
 								},
 
-								});
-							$(".show_feed").hide();
+							});
 							$(".loginnDIV").hide();
 							$(".principalDIV").hide();
-							$(".SIGNUPDIV").hide();
 							$(".uploadDiv").hide();
+							$(".SIGNUPDIV").hide();
+							$(".feedback").hide();
 							$(".PRIMA_PAGINA").hide();
 							$(".show_feed").hide();
 							$("#chatDiv").hide();
-							$(".validateDIV").hide();
-							$(".validateDIV").hide();
+							$(".istoricDIV").hide();
+							$(".PRIMA_PAGINA").hide();
 							$(".cartDiv").hide();
 							$(".cartDivBuy").show();
+
 						});
 
 
-							$("#buy-from-cart-form").submit(function (e) {
+						$("#buy-from-cart-form").submit(function (e) {
 
 							$.ajax({
 								type: "GET",
-								url: "/buy/"+current_user,
+								url: "/buy/" + current_user,
 								success: function (response) {
 									if (response.succes == "false") {
 										alert(response.error);
@@ -518,12 +502,180 @@
 										$("#chatDiv").hide();
 										$(".validateDIV").hide();
 										alert("You have bought everything from your cart, " + username + "!");
-										var x = document.getElementById ("hh2");
-										hh2.refresh();
+										var x = document.getElementById("hh2");
+										//hh2.refresh();
+										if (current_user != "none") {
+											$.ajax({
+												type: "GET",
+												url: "/seeCart/" + current_user,
+												success: function (response) {
+													if (response.succes == "false") {
+													}
+													else {
+														function loadTable(tableId, fields, data) {
+															//$('#' + tableId).empty(); //not really necessary
+															var rows = '';
+
+															$.each(data, function (index, item) {
+																var row = '<tr>';
+																$.each(fields, function (index, field) {
+																	row += '<td>' + item[field + ''] + '</td>';
+																});
+																rows += row + '<tr>';
+															});
+															$('#' + tableId).html(rows);
+														}
+														loadTable('hh2', ['id', 'username', 'price'], response.cart);
+
+
+													}
+
+
+												},
+
+											});
+											$(".show_feed").hide();
+											$(".loginnDIV").hide();
+											$(".principalDIV").hide();
+											$(".SIGNUPDIV").hide();
+											$(".uploadDiv").hide();
+											$(".PRIMA_PAGINA").hide();
+											$(".show_feed").hide();
+											$("#chatDiv").hide();
+											$(".validateDIV").hide();
+											$(".validateDIV").hide();
+											$(".cartDivBuy").show();
+											$(".cartDiv").hide();
+										}
 
 									}
 
 									$("#buy-from-cart-form")[0].reset();
+								},
+
+							});
+							return false;
+						});
+						//showDetails
+
+						function myDisplay() {
+							$("#lista_feed").empty();
+
+							$.ajax
+								({
+									url: "/commentary", // Url to which the request is send
+									type: "GET",             // Type of request to be send, called as method
+									data: { photoId: array_photos[index].id }, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+									success: function (data)   // A function to be called if request succeeds
+									{
+										if (data.success == "false") {
+											console.log("Poza nu are comentarii");
+										}
+										else {
+											var obj = data.commentaryList;
+											var arrayLength = obj.length;
+											for (var i = 0; i < arrayLength; i++) {
+												var ul = document.getElementById("lista_feed");
+												var li = document.createElement("li");
+												var a = document.createElement("article");
+												var head = document.createElement("header");
+												var par = document.createElement("p");
+												head.textContent = obj[i].author + "  said:";
+												par.textContent = obj[i].commentary;
+												a.appendChild(head);
+												a.append(par);
+												li.appendChild(a);
+												ul.appendChild(li);
+											}
+										}
+
+										$(".show_feed").show();
+										$(".feedback").show();
+									},
+
+
+								});
+						}
+
+						function myDisplayDetails() {
+							$("#lista_feed").empty();
+							$.ajax
+								({
+									url: "/picturesDetails", // Url to which the request is send
+									type: "GET",
+									data: { id: array_photos[index].id },             // Type of request to be send, called as method
+									success: function (data)   // A function to be called if request succeeds
+									{
+										//detailsf
+										var textul = "Author-" + data.author + "           Price-" + data.price;
+										document.getElementById('detailsf').innerHTML = textul;
+									},
+
+
+								});
+
+						}
+
+						$("#showFeed").click(function () {
+							myDisplay();
+						});
+
+						$("#showDetails").click(function () {
+							myDisplayDetails();
+						});
+
+						$("#addFeedback").click(function () {
+							if (current_user != "none") {
+								$("#lista_feed").empty();
+								comm = $("input#comment1").val();
+
+								$.ajax
+									({
+										url: "newCommentary/" + array_photos[index].id + "/" + current_user, // Url to which the request is send
+										type: "POST",
+										data: comm,             // Type of request to be send, called as method
+										success: function (data)   // A function to be called if request succeeds
+										{
+											if (data.success == "true") {
+												myDisplay();
+												$("#to_reset_form")[0].reset();
+											}
+										},
+
+
+									});
+							}
+						});
+
+						$("#chat-Form").submit(function (e) {
+							$("#lista_feed").empty();
+							//<input type="text" placeholder="Min Price" class="aux" id="minPrice" name="pass">
+							//<input type="text" placeholder="Max Price" class="aux" id="maxPrice" name="pass">
+							//<input type="text" placeholder="Author" class="aux" id="author" name="pass">
+							min = $("input#minPrice.aux").val();
+							max = $("input#maxPrice.aux").val();
+							author = $("input#author.aux").val();
+
+							$.ajax({
+								type: "GET",
+								url: "/pictures",
+								data: {
+									minPrice: min,
+									maxPrice: max,
+									username: author
+								},
+								success: function (data) {
+									$(".loginnDIV").hide();
+									$(".principalDIV").show();
+									$(".SIGNUPDIV").hide();
+									$(".uploadDiv").hide();
+									$(".PRIMA_PAGINA").hide();
+									$("#chatDiv").hide();
+									$(".show_feed").hide();
+									if (data.images) {
+										document.getElementById("imageID").src = data.images[0].location;
+										array_photos = data.images;
+									}
 								},
 
 							});
@@ -535,48 +687,53 @@
 
 
 
-							$("#getCart").click(function () {
-							$.ajax({
-								type: "GET",
-								url: "/seeCart/"+current_user,
-								success: function (response) {
-									if (response.succes == "false") {
-									}
-									else {
-										function loadTable(tableId, fields, data) {
-											//$('#' + tableId).empty(); //not really necessary
-											var rows = '';
-
-											$.each(data, function(index, item) {
-												var row = '<tr>';
-												$.each(fields, function(index, field) {
-													row += '<td>' + item[field+''] + '</td>';
-												});
-												rows += row + '<tr>';
-											});
-											$('#' + tableId).html(rows);
+						$("#getCart").click(function () {
+							if (current_user != "none") {
+								$.ajax({
+									type: "GET",
+									url: "/seeCart/" + current_user,
+									success: function (response) {
+										if (response.succes == "false") {
 										}
-										loadTable('hh', ['id', 'username', 'price'], response.cart);
+										else {
+											function loadTable(tableId, fields, data) {
+												//$('#' + tableId).empty(); //not really necessary
+												var rows = '';
+
+												$.each(data, function (index, item) {
+													var row = '<tr>';
+													$.each(fields, function (index, field) {
+														row += '<td>' + item[field + ''] + '</td>';
+													});
+													rows += row + '<tr>';
+												});
+												$('#' + tableId).html(rows);
+											}
+											loadTable('hh', ['id', 'username', 'price'], response.cart);
 
 
-									}
+										}
 
 
-								},
+									},
 
 								});
-							$(".show_feed").hide();
-							$(".loginnDIV").hide();
-							$(".principalDIV").hide();
-							$(".SIGNUPDIV").hide();
-							$(".uploadDiv").hide();
-							$(".PRIMA_PAGINA").hide();
-							$(".show_feed").hide();
-							$("#chatDiv").hide();
-							$(".validateDIV").hide();
-							$(".validateDIV").hide();
-							$(".cartDivBuy").hide();
-							$(".cartDiv").show();
+								$(".show_feed").hide();
+								$(".loginnDIV").hide();
+								$(".principalDIV").hide();
+								$(".SIGNUPDIV").hide();
+								$(".uploadDiv").hide();
+								$(".PRIMA_PAGINA").hide();
+								$(".show_feed").hide();
+								$("#chatDiv").hide();
+								$(".validateDIV").hide();
+								$(".validateDIV").hide();
+								$(".cartDivBuy").hide();
+								$(".cartDiv").show();
+							}
+							else {
+								alert("You must be authenticated for this opperation");
+							}
 						});
 
 						$("#cart-form").submit(function (e) {
@@ -585,17 +742,13 @@
 
 							$.ajax({
 								type: "GET",
-								url: "/removeFromCart/"+id+"/"+current_user,
+								url: "/removeFromCart/" + id + "/" + current_user,
 								success: function (response) {
 									if (response.succes == "false") {
 										alert("For some reason, this item could not be removed from cart");
 
 									}
 									else {
-										console.log("Recieved authentication success");
-										current_user = username;
-										var textul = "Logged in as " + username;
-										$("p#avem").text(textul);
 										$(".loginnDIV").hide();
 										$(".principalDIV").hide();
 										$(".uploadDiv").hide();
@@ -604,7 +757,54 @@
 										$(".PRIMA_PAGINA").hide();
 										$(".show_feed").hide();
 										$("#chatDiv").hide();
-										$(".validateDIV").hide();
+										$(".istoricDIV").hide();
+										$(".PRIMA_PAGINA").show();
+										$(".cartDiv").hide();
+										$(".cartDivBuy").hide();
+										if (current_user != "none") {
+											$.ajax({
+												type: "GET",
+												url: "/seeCart/" + current_user,
+												success: function (response) {
+													if (response.succes == "false") {
+													}
+													else {
+														function loadTable(tableId, fields, data) {
+															//$('#' + tableId).empty(); //not really necessary
+															var rows = '';
+
+															$.each(data, function (index, item) {
+																var row = '<tr>';
+																$.each(fields, function (index, field) {
+																	row += '<td>' + item[field + ''] + '</td>';
+																});
+																rows += row + '<tr>';
+															});
+															$('#' + tableId).html(rows);
+														}
+														loadTable('hh', ['id', 'username', 'price'], response.cart);
+
+
+													}
+
+
+												},
+
+											});
+											$(".show_feed").hide();
+											$(".loginnDIV").hide();
+											$(".principalDIV").hide();
+											$(".SIGNUPDIV").hide();
+											$(".uploadDiv").hide();
+											$(".PRIMA_PAGINA").hide();
+											$(".show_feed").hide();
+											$("#chatDiv").hide();
+											$(".validateDIV").hide();
+											$(".validateDIV").hide();
+											$(".cartDivBuy").hide();
+											$(".cartDiv").show();
+										}
+
 										alert("You have suvccessfully removed item with id " + id + "!");
 									}
 									$("#cart-form")[0].reset();
@@ -628,7 +828,7 @@
 									password: password
 								},
 								success: function (response) {
-									if (response.succes == "false") {
+									if (response.success == "false") {
 										alert(response.error);
 										console.log("Recieved authentication error");
 										$("p#cacat1").text("Not logged in");
@@ -636,6 +836,7 @@
 									else {
 										console.log("Recieved authentication success");
 										current_user = username;
+										type_u = response.type;
 										var textul = "Logged in as " + username;
 										$("p#avem").text(textul);
 										$(".loginnDIV").hide();
@@ -646,6 +847,9 @@
 										$(".PRIMA_PAGINA").show();
 										$(".show_feed").hide();
 										$("#chatDiv").hide();
+										$(".loginnDIV").hide();
+										$(".cartDiv").hide();
+										$(".cartDivBuy").hide();
 										$(".istoricDIV").hide();
 										alert("Welcome, " + username + "!");
 									}
@@ -682,7 +886,7 @@
 							return false;
 						});
 
-                    function displayHistory() {
+						function displayHistory() {
 							$("#lista_feed").empty();
 
 							$.ajax({
@@ -694,40 +898,40 @@
 										$(".istoricDIV").text(response.error);
 									}
 									else {
-									    $('.istoricDIV').empty();
-                                        var table = $('<table>');
-                                        table.css("width", "100%");
-                                        table.css("border", "1px solid black");
-                                        var table_header = $('<tr>');
-                                        table_header.css("border", "1px solid black");
-                                        var col1 = $('<th>').text("DATE");
-                                        var col2 = $('<th>').text("QUANTITY");
-                                        var col3 = $('<th>').text("PRICE");
-                                        col1.css("border", "1px solid black");
-                                        col2.css("border", "1px solid black");
-                                        col3.css("border", "1px solid black");
-                                        table_header.append(col1);
-                                        table_header.append(col2);
-                                        table_header.append(col3);
-                                        table.append(table_header);
-                                        jQuery.each(response.transactions, function() {
-                                            var row = $('<tr>');
-                                            row.css("border", "1px solid black");
-                                            var td1 = $('<td>').text(this.time);
-                                            var td2 = $('<td>').text(this.quantity);
-                                            var td3 = $('<td>').text(this.price);
-                                            td1.attr('align', 'center');
-                                            td2.attr('align', 'center');
-                                            td3.attr('align', 'center');
-                                            td1.css("border", "1px solid black");
-                                            td2.css("border", "1px solid black");
-                                            td3.css("border", "1px solid black");
-                                            row.append(td1);
-                                            row.append(td2);
-                                            row.append(td3);
-                                            table.append(row);
-                                        });
-                                        $('.istoricDIV').append(table);
+										$('.istoricDIV').empty();
+										var table = $('<table>');
+										table.css("width", "100%");
+										table.css("border", "1px solid black");
+										var table_header = $('<tr>');
+										table_header.css("border", "1px solid black");
+										var col1 = $('<th>').text("DATE");
+										var col2 = $('<th>').text("QUANTITY");
+										var col3 = $('<th>').text("PRICE");
+										col1.css("border", "1px solid black");
+										col2.css("border", "1px solid black");
+										col3.css("border", "1px solid black");
+										table_header.append(col1);
+										table_header.append(col2);
+										table_header.append(col3);
+										table.append(table_header);
+										jQuery.each(response.transactions, function () {
+											var row = $('<tr>');
+											row.css("border", "1px solid black");
+											var td1 = $('<td>').text(this.time);
+											var td2 = $('<td>').text(this.quantity);
+											var td3 = $('<td>').text(this.price);
+											td1.attr('align', 'center');
+											td2.attr('align', 'center');
+											td3.attr('align', 'center');
+											td1.css("border", "1px solid black");
+											td2.css("border", "1px solid black");
+											td3.css("border", "1px solid black");
+											row.append(td1);
+											row.append(td2);
+											row.append(td3);
+											table.append(row);
+										});
+										$('.istoricDIV').append(table);
 									}
 									$("#login-form")[0].reset();
 									$("#signup-form")[0].reset();
@@ -782,104 +986,185 @@
 						});
 
 						$("#addImg").click(function () {
-							$(".show_feed").hide();
-							$(".loginnDIV").hide();
-							$(".principalDIV").hide();
-							$(".SIGNUPDIV").hide();
-							$(".uploadDiv").show();
-							$(".PRIMA_PAGINA").hide();
-							$(".show_feed").hide();
-							$("#chatDiv").hide();
-							$(".istoricDIV").hide();
-							$(".cartDiv").hide();
-							$(".cartDivBuy").hide();
+							if (current_user != "none") {
+								if(type_u == "fotograf") {
+									$(".show_feed").hide();
+									$(".loginnDIV").hide();
+									$(".principalDIV").hide();
+									$(".SIGNUPDIV").hide();
+									$(".uploadDiv").show();
+									$(".PRIMA_PAGINA").hide();
+									$(".show_feed").hide();
+									$("#chatDiv").hide();
+									$(".istoricDIV").hide();
+									$(".cartDiv").hide();
+									$(".cartDivBuy").hide();
+								} else {
+									alert("You cannot upload photo as you are not a photographer");
+								}
+							} else {
+								alert("You must be authenticated for this opperation");
+							}
+						});
 
+
+
+						$("#addToCart").click(function () {
+							$.ajax
+								({
+									url: "/addToCart/" + array_photos[index].id + "/" + current_user, // Url to which the request is send
+									type: "GET",
+									success: function (data)   // A function to be called if request succeeds
+									{
+										if (data.success == "true") {
+											alert("Picture has been added to cart");
+										}
+										else {
+											alert("Error while adding picture to cart");
+										}
+									},
+
+
+								});
 						});
 
 
 						$("#logOut").click(function (e) {
-							e.preventDefault();
-							alert("User has logged out")
-							var logout1 = "logout";
-							current_user = "none";
-							array_clicked = [];
-							var textul = "Not logged in";
-							$("p#avem").text(textul);
-							$(".loginnDIV").hide();
-							$(".principalDIV").hide();
-							$(".uploadDiv").hide();
-							$(".SIGNUPDIV").hide();
-							$(".feedback").hide();
-							$(".PRIMA_PAGINA").hide();
-							$(".show_feed").hide();
-							$("#chatDiv").hide();
-							$(".istoricDIV").hide();
-							$(".PRIMA_PAGINA").show();
-							$(".cartDiv").hide();
-							$(".cartDivBuy").hide();
+							if (current_user != "none") {
+								e.preventDefault();
+								var logout1 = "logout";
+								current_user = "none";
+								type_u = "none";
+								array_clicked = [];
+								var textul = "Not logged in";
+								$("p#avem").text(textul);
+								$(".loginnDIV").hide();
+								$(".principalDIV").hide();
+								$(".uploadDiv").hide();
+								$(".SIGNUPDIV").hide();
+								$(".feedback").hide();
+								$(".PRIMA_PAGINA").hide();
+								$(".show_feed").hide();
+								$("#chatDiv").hide();
+								$(".istoricDIV").hide();
+								$(".PRIMA_PAGINA").show();
+								$(".cartDiv").hide();
+								$(".cartDivBuy").hide();
 
 
-							$.ajax({
-								type: "GET",
-								url: "/logout",
-								data: {username: username},
-								success: function (response) {
-									alert("User has logged out");
-								},
+								$.ajax({
+									type: "GET",
+									url: "/logout",
+									data: { username: username },
+									success: function (response) {
+										alert("User has logged out");
+									},
 
-							});
+								});
+							}
+							else {
+								alert("You are not logged in!");
+							}
 						});
 
-
-							$("#addImg").click(function () {
-							$(".show_feed").hide();
-							$(".loginnDIV").hide();
-							$(".principalDIV").hide();
-							$(".SIGNUPDIV").hide();
-							$(".uploadDiv").show();
-							$(".PRIMA_PAGINA").hide();
-							$(".show_feed").hide();
-							$("#chatDiv").hide();
-							$(".istoricDIV").hide();
-							$(".cartDiv").hide();
-							$(".cartDivBuy").hide();
-
-
-						});
-
-						 $("#upload-image").submit(function (e)
-						 {
-					 		var file_data = $("#file_id").prop("files")[0];
-					 		var price = $("#price").val();
+						$("#upload-image").submit(function (e) {
+							var file_data = $("#file_id").prop("files")[0];
+							var price = $("#price").val();
 							var form_data = new FormData();
-                        	form_data.append("file", file_data);
-    						form_data.append("username", current_user);
-    						form_data.append("price", price);
+							form_data.append("file", file_data);
+							form_data.append("username", current_user);
+							form_data.append("price", price);
 							$.ajax({
-	    						url: "/addPicture", // Url to which the request is send
+								url: "/addPicture", // Url to which the request is send
 								type: "POST",             // Type of request to be send, called as method
 								data: form_data, // Data sent to server, a set of key/value pairs (i.e. form fields and values)
-        						processData: false,
-        						contentType:false,
+								processData: false,
+								contentType: false,
 								success: function (data)   // A function to be called if request succeeds
 								{
 									$("#upload-image")[0].reset();
 								},
 								async: false
-						  });
-						  return false;
+							});
+							return false;
 						});
 
+						$("#b_stanga").click(function () {
+
+							console.log("buton stanga %d");
+							if (array_photos.length > 1) {
+
+								if (index + 1 < array_photos.length) {
+									$("#lista_feed").empty();
+									$(".show_feed").hide();
+									index++;
+								}
+								console.log(array_photos[index].location);
+								console.log(index);
+								document.getElementById("imageID").src = array_photos[index].location;
+								document.getElementById('detailsf').innerHTML = "To see details click below";
+							}
+						});
+
+						$("#b_dreapta").click(function () {
+							console.log("buton dreapta %d");
+
+							if (array_photos.length > 1) {
+								if (index > 0) {
+									$("#lista_feed").empty();
+									$(".show_feed").hide();
+									index--;
+								}
+								console.log(array_photos[index].location);
+								console.log(index);
+								document.getElementById("imageID").src = array_photos[index].location;
+								document.getElementById('detailsf').innerHTML = "To see details click below";
+							}
+						});
+
+						$("#myPhotos").click(function () {
+							if (current_user != "none") {
+								$("#lista_feed").empty();
+
+								$.ajax({
+									url: "/pictures", // Url to which the request is send
+									type: "GET",             // Type of request to be send, called as method
+									// Data sent to server, a set of key/value pairs (i.e. form fields and values)
+									contentType: false,       // The content type used when sending data to the server.
+									cache: false,             // To unable request pages to be cached
+									processData: false,        // To send DOMDocument or non processed data file it is set to false
+									success: function (data)   // A function to be called if request succeeds
+									{
+										$(".loginnDIV").hide();
+										$(".principalDIV").show();
+										$(".uploadDiv").hide();
+										$(".SIGNUPDIV").hide();
+										$(".feedback").hide();
+										$(".PRIMA_PAGINA").hide();
+										$(".show_feed").hide();
+										$("#chatDiv").hide();
+										$(".istoricDIV").hide();
+										$(".PRIMA_PAGINA").hide();
+										$(".cartDiv").hide();
+										$(".cartDivBuy").hide();
+
+
+										if (data.images) {
+											document.getElementById("imageID").src = data.images[0].location;
+											array_photos = data.images;
+										}
+									},
+
+
+								});
+							}
+							else {
+								alert("You must be authenticated for this opperation");
+							}
+						});
 					});
 				</script>
 
-				<div class="listaFotografi">
-
-					<nav>
-						<ul id="lista1">
-						</ul>
-					</nav>
-				</div>
 			</div>
 		</div>
 	</div>
